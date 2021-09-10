@@ -1,0 +1,86 @@
+﻿@model IEnumerable<EduCavoFinal.Models.Review>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title ml-2">Reviews</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Text
+                                    </th>
+                                    <th>
+                                        Customer
+                                    </th>
+
+                                    <th>
+                                        Courses
+                                    </th>
+                                    <th>
+                                        Team
+                                    </th>
+                                    <th>
+                                        Rating
+                                    </th>
+                                    <th>
+                                        AddedDate
+                                    </th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        @(item.Text!=null && item.Text.Length>100? item.Text.Substring(0, 100) : item.Text)
+
+                                    </td>
+                                    <td>
+                                        @item.Customer.Name
+
+                                    </td>
+                                    <td>
+                                        @item.Courses.Title
+
+                                    </td>
+                                    <td>
+                                        @item.Team.FullName
+
+                                    </td>
+                                    <td>
+                                        @item.Rating
+
+                                    </td>
+
+                                    <td>
+                                        @item.AddedDate.ToString("dd.MM.yyyy")
+                                    </td>
+                                    <td>
+                                        @if (Model != null)
+                                        {
+
+                                            <a onclick="return confirm('Are you sure?')" asp-area="admin" asp-controller="reviews" asp-action="delete" asp-route-id="@item.Id" class="btn btn-danger" title="delete"><i class="mdi mdi-delete"></i>Delete</a>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

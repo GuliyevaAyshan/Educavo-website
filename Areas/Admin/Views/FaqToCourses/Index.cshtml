@@ -1,0 +1,62 @@
+﻿@model IEnumerable<EduCavoFinal.Models.FaqToCourse>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title ml-2">Faq and Course relation</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Faq
+                                    </th>
+                                    <th>
+                                        Course
+                                    </th>
+
+                                    <th>
+
+                                        <a asp-area="admin" asp-controller="faqtocourses" asp-action="create" class="btn btn-success btn-rounded btn-fw">Create New</a>
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        @item.Faq.Questions
+
+                                    </td>
+                                    <td>
+                                        @item.Course.Title
+
+                                    </td>
+
+                                    <td>
+                                        @if (Model != null)
+                                        {
+                                            <a asp-area="admin" asp-controller="faqtocourses" asp-action="edit" asp-route-id="@item.Id" class="btn btn-warning" title="edit"><i class="mdi mdi-edit"></i>Edit</a>
+                                            <a onclick="return confirm('Are you sure?')" asp-area="admin" asp-controller="faqtocourses" asp-action="delete" asp-route-id="@item.Id" class="btn btn-danger" title="delete"><i class="mdi mdi-delete"></i>Delete</a>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

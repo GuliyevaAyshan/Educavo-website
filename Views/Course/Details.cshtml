@@ -1,0 +1,419 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+
+@inject IHttpContextAccessor HttpContextAccessor
+@{ string customerString = HttpContextAccessor.HttpContext.Session.GetString("ValidCustomer");
+    Customer customer = null;
+
+    if (customerString != null)
+    {
+        customer = JsonConvert.DeserializeObject<Customer>(customerString);
+    }
+
+   
+}
+@model VMCourses
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    VMBreadcrumb vmBreadcrumb = new VMBreadcrumb() { Preview = "Home", Current = "Course Details" };
+    <style>
+        body {
+            overflow-x: hidden !important;
+            vertical-align: baseline !important;
+        }
+
+        .label {
+            color: black !important;
+            font-weight: normal !important;
+        }
+
+        .fade {
+            opacity: unset !important;
+        }
+        
+    </style>
+
+}
+
+<!-- Main content Start -->
+<div class="main-area">
+    <!-- Breadcrumbs Start -->
+    <partial name="_BreadcrumbPartial" model="vmBreadcrumb" />
+    <!-- Intro Courses -->
+    <section class="intro-section gray-bg pt-94 pb-100 md-pt-64 md-pb-70">
+        <div class="container">
+            <div class="row clearfix">
+                <!-- Content Column -->
+                <div class="col-lg-8 md-mb-50">
+                    <!-- Intro Info Tabs-->
+                    <div class="intro-info-tabs">
+                        <ul class="nav nav-tabs intro-tabs tabs-box" id="myTab" role="tablist">
+                            <li class="nav-item tab-btns">
+                                <a class="nav-link tab-btn active" id="prod-overview-tab" data-toggle="tab" href="#prod-overview" role="tab" aria-controls="prod-overview" aria-selected="true">Overview</a>
+                            </li>
+                            <li class="nav-item tab-btns">
+                                <a class="nav-link tab-btn" id="prod-curriculum-tab" data-toggle="tab" href="#prod-curriculum" role="tab" aria-controls="prod-curriculum" aria-selected="false">Curriculum</a>
+                            </li>
+                            <li class="nav-item tab-btns">
+                                <a class="nav-link tab-btn" id="prod-instructor-tab" data-toggle="tab" href="#prod-instructor" role="tab" aria-controls="prod-instructor" aria-selected="false">Instructor</a>
+                            </li>
+                            <li class="nav-item tab-btns">
+                                <a class="nav-link tab-btn" id="prod-faq-tab" data-toggle="tab" href="#prod-faq" role="tab" aria-controls="prod-faq" aria-selected="false">Faq</a>
+                            </li>
+                            <li class="nav-item tab-btns">
+                                <a class="nav-link tab-btn" id="prod-reviews-tab" data-toggle="tab" href="#prod-reviews" role="tab" aria-controls="prod-reviews" aria-selected="false">Reviews</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content tabs-content" id="myTabContent">
+                            <div class="tab-pane fade tab show active" id="prod-overview" role="tabpanel" aria-labelledby="prod-overview-tab">
+                                <div class="content white-bg pt-30">
+                                    <!-- Cource Overview -->
+                                    <div class="course-overview">
+                                        <div class="inner-box">
+                                            <h4>@Model.Course.Title</h4>
+                                            <p>@Html.Raw(Model.Course.Desc)</p>
+                                            <ul class="student-list">
+                                                <li>@Model.Team.FirstOrDefault().TotalStudent.ToString("##,###")  Total Students</li>
+                                                <li>
+                                                    @{
+
+                                                        decimal rating = 0;
+                                                        decimal finalRating = 0;
+                                                        foreach (var item in Model.Course.Review)
+                                                        {
+                                                            rating += item.Rating;
+                                                        }
+                                                        if (Model.Course.Review.Count != 0)
+                                                        {
+                                                            finalRating = (rating / Model.Course.Review.Count);
+                                                        }
+                                                        <span class="theme_color">@finalRating</span>
+                                                        @for (int i = 1; i <= 5; i++)
+                                                        {
+                                                            if (i <= finalRating)
+                                                            {
+
+                                                                <span class="fa fa-star"></span>
+
+                                                            }
+
+                                                        }
+                                                        <span>(@Model.Team.FirstOrDefault().TotalRating Rating)</span>
+                                                    }
+                                                </li>
+                                                <li>@Model.Course.Review.Count Reviews</li>
+                                            </ul>
+
+
+                                            <h3>What you’ll learn?</h3>
+                                            <ul class="review-list">
+                                                <li>Phasellus enim magna, varius et commodo ut.</li>
+                                                <li>Sed consequat justo non mauris pretium at tempor justo.</li>
+                                                <li>Ut nulla tellus, eleifend euismod pellentesque vel, sagittis vel justo</li>
+                                                <li>Phasellus enim magna, varius et commodo ut.</li>
+                                                <li>Phasellus enim magna, varius et commodo ut.</li>
+                                                <li>Sed consequat justo non mauris pretium at tempor justo.</li>
+                                                <li>Ut nulla tellus, eleifend euismod pellentesque vel, sagittis vel justo</li>
+                                                <li>Phasellus enim magna, varius et commodo ut.</li>
+                                            </ul>
+                                            <h3>Requirements</h3>
+                                            <ul class="review-list">
+                                                <li>Phasellus enim magna, varius et commodo ut, ultricies vitae velit. Ut nulla tellus, eleifend euismod pellentesque vel, sagittis vel justo</li>
+                                                <li>Ultricies vitae velit. Ut nulla tellus, eleifend euismod pellentesque vel.</li>
+                                                <li>Phasellus enim magna, varius et commodo ut.</li>
+                                                <li>Varius et commodo ut, ultricies vitae velit. Ut nulla tellus.</li>
+                                                <li>Phasellus enim magna, varius et commodo ut.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="prod-curriculum" role="tabpanel" aria-labelledby="prod-curriculum-tab">
+                                @foreach (var item in Model.CurriculumTitles)
+                                {
+
+                                    <div class="content">
+                                        <div id="accordion" class="accordion-box">
+                                            <div class="card accordion block">
+                                                <div class="card-header">
+                                                    <h5 class="mb-0">
+                                                        <button class="btn btn-link acc-btn collapsed" data-toggle="collapse" data-target="#@item.Curriculum.FirstOrDefault().Collapse" aria-expanded="false" aria-controls="@item.Curriculum.FirstOrDefault().Collapse">@item.Title</button>
+                                                    </h5>
+                                                </div>
+
+                                                <div id="@item.Curriculum.FirstOrDefault().Collapse" class="collapse" data-parent="#accordion">
+                                                    <div class="card-body acc-content">
+                                                        @foreach (var item2 in item.Curriculum)
+                                                        {
+                                                            <div class="content">
+                                                                <div class="clearfix">
+                                                                    <div class="pull-left">
+                                                                        <a class="popup-videos play-icon" href="@item2.Video"><i class="fa fa-play"></i>@item2.Subtitle</a>
+                                                                    </div>
+                                                                    <div class="pull-right">
+                                                                        <div class="minutes">@item2.VideoDuration</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                            <div class="tab-pane fade" id="prod-instructor" role="tabpanel" aria-labelledby="prod-instructor-tab">
+                                <div class="content pt-30 pb-30 pl-30 pr-30 white-bg">
+                                    <h3 class="instructor-title">Instructors</h3>
+                                    <div class="row ga-team style1 orange-color transparent-bg clearfix">
+                                        @foreach (var item in Model.Team.Take(2))
+                                        {
+                                            <div class="col-lg-6 col-md-6 col-sm-12 sm-mb-30">
+                                                <div class="team-item">
+                                                    <img src="~/images/team/@item.Image" alt="">
+                                                    <div class="content-part">
+                                                        <h4 class="name"><a href="#">@item.FullName</a></h4>
+                                                        <span class="designation">@item.Position</span>
+                                                        <ul class="social-links">
+                                                            @foreach (var item2 in item.SocialToTeam.Take(4))
+                                                            {
+                                                                <li><a href="@item2.Social.Link"><i class="@item2.Social.Icon"></i></a></li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="prod-faq" role="tabpanel" aria-labelledby="prod-faq-tab">
+                                @foreach (var item in Model.FaqTitles)
+                                {
+                                    <div class="content">
+                                        <div id="accordion3" class="accordion-box">
+                                            <div class="card accordion block">
+                                                <div class="card-header">
+                                                    <h5 class="mb-0">
+                                                        <button class="btn btn-link acc-btn" data-toggle="collapse" data-target="#@item.Faq.FirstOrDefault().Collapse" aria-expanded="true" aria-controls="@item.Faq.FirstOrDefault().Collapse">@item.Title</button>
+                                                    </h5>
+                                                </div>
+
+                                                <div id="@item.Faq.FirstOrDefault().Collapse" class="collapse" data-parent="#accordion">
+                                                    <div id="accordion" class="accordion">
+                                                        @foreach (var item2 in item.Faq.Take(3))
+                                                        {
+                                                            <div class="content">
+                                                                <div class="card-header" style="background-color:#ff5421;">
+                                                                    <button class="btn btn-link acc-btn" data-toggle="collapse" data-target="#@item2.Collapse">@item2.Questions</button>
+                                                                </div>
+                                                                <div id="@item2.Collapse" class="collapse" data-parent="#accordion">
+                                                                    <div class="card-body">
+                                                                        @item2.Description
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="tab-pane fade" id="prod-reviews" role="tabpanel" aria-labelledby="prod-reviews-tab">
+                                <div class="content pt-30 pb-30 white-bg">
+                                    @foreach (var item in Model.Course.Review)
+                                    {
+                                        <div class="cource-review-box mb-30">
+                                            <h4>@item.Customer.Name</h4>
+                                            <div class="rating">
+                                                @{
+
+                                                    decimal rrating = 0;
+                                                    decimal ffinalRating = 0;
+                                                    foreach (var item2 in Model.Course.Review)
+                                                    {
+                                                        rrating += item2.Rating;
+                                                    }
+                                                    if (Model.Review.Count != 0)
+                                                    {
+                                                        ffinalRating = (rrating / Model.Course.Review.Count);
+                                                    }
+                                                    <span class="theme_color" style="color:orangered;font-weight:bold;">@item.Rating</span>
+
+                                                    @for (int i = 0; i < item.Rating; i++)
+                                                    {
+                                                        <span><i class="fas fa-star" style="color:orangered"></i></span>
+                                                    }
+                                                    @for (int i = 0; i < (5 - item.Rating); i++)
+                                                    {
+                                                        <span><i class="far fa-star"></i></span>
+                                                    }
+
+                                                    <span>@Model.Course.Review.Count Reviews</span>
+                                                }
+                                            </div>
+                                            <div class="text">@item.Text</div>
+                                            @*<div class="helpful">Was this review helpful?</div>
+                                                <ul class="like-option">
+                                                    <li><i class="fa fa-thumbs-o-up"></i></li>
+                                                    <li><i class="fa fa-thumbs-o-down"></i></li>
+                                                    <li><a class="report" href="#">Report</a></li>
+                                                </ul>*@
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                            <br />
+                            <!-- End Single List -->
+                            <div class="comment-area">
+                                <div class="comment-full">
+
+                                    <h3 class="reply-title">Leave a Reply</h3>
+                                    <p>
+                                        <span>Your email address will not be published. </span>
+                                    </p>
+                                    @*@if (customer != null)
+                                        {*@  <div class="rating__list">
+    <!-- Start Single List -->
+    <span class="rating" data-rating="1">
+        <i class="fas fa-star" style="color:orangered"></i>
+    </span>
+    <br />
+    <span class="rating" data-rating="2">
+        <i class="fas fa-star" style="color:orangered"></i>
+        <i class="fas fa-star" style="color:orangered"></i>
+    </span>
+    <br />
+    <span class="rating" data-rating="3">
+        <i class="fas fa-star" style="color:orangered"></i>
+        <i class="fas fa-star" style="color:orangered"></i>
+        <i class="fas fa-star" style="color:orangered"></i>
+
+    </span>
+    <br />
+    <span class="rating" data-rating="4">
+        <i class="fas fa-star" style="color:orangered"></i>
+        <i class="fas fa-star" style="color:orangered"></i>
+        <i class="fas fa-star" style="color:orangered"></i>
+        <i class="fas fa-star" style="color:orangered"></i>
+    </span>
+    <br />
+    <span class="rating" data-rating="5">
+        <i class="fas fa-star" style="color:orangered"></i>
+        <i class="fas fa-star" style="color:orangered"></i>
+        <i class="fas fa-star" style="color:orangered"></i>
+        <i class="fas fa-star" style="color:orangered"></i>
+        <i class="fas fa-star" style="color:orangered"></i>
+    </span>
+    <!-- End Single List -->
+</div>
+
+                                    <form id="contact-form" asp-controller="Course" asp-action="AddReview" method="post">
+                                        <div class="row">
+
+                                            <div class="col-md-12 col-sm-12 mb-35">
+                                                <div class="form-group">
+                                                    <label>Your comment here...</label>
+                                                    <textarea name="Text" cols="40" rows="10" class="textarea form-control"></textarea>
+
+                                                </div>
+                                                <input type="hidden" name="Rating" value="0" />
+                                                <input type="hidden" name="courseId" value="@Model.Course.Id" />
+                                                <input type="hidden" name="instructorId" value="@Model.Team.FirstOrDefault().Id" />
+                                            </div>
+                                        </div>
+                                        <div class="submit-btn">
+                                            <input name="submit" type="submit" id="submit" class="submit" value="Post Comment">
+                                        </div>
+
+                                    </form>
+                                    @*}
+                                        else
+                                        { <h4>
+                                                <a asp-controller="home" asp-action="login" style="color:orangered;">Please Sign in and send reviews! </a>
+                                            </h4>
+
+                                        }*@
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video Column -->
+                <div class="video-column col-lg-4">
+                    <div class="inner-column">
+                        <!-- Video Box -->
+                        <div class="intro-video media-icon orange-color2">
+                            <img class="video-img" src="~/images/about/about-video-bg2.png" alt="Video Image">
+                            <a class="popup-videos" href="@Model.Course.Video">
+                                <i class="fa fa-play"></i>
+                            </a>
+                            <h4>Preview this course</h4>
+                        </div>
+                        <div class="course-features-info">
+                            <ul>
+                                <li class="lectures-feature">
+                                    <i class="fa fa-files-o"></i>
+                                    <span class="label">Lectures</span>
+                                    <span class="value">@Model.Course.Lectures</span>
+                                </li>
+
+                                <li class="quizzes-feature">
+                                    <i class="fa fa-puzzle-piece"></i>
+                                    <span class="label">Quizzes</span>
+                                    <span class="value">@Model.Course.Quizzes</span>
+                                </li>
+
+                                <li class="duration-feature">
+                                    <i class="fa fa-clock-o"></i>
+                                    <span class="label">Duration</span>
+                                    <span class="value">@Model.Course.Duration week </span>
+                                </li>
+
+                                <li class="students-feature">
+                                    <i class="fa fa-users"></i>
+                                    <span class="label">Students</span>
+                                    <span class="value">@Model.Course.StudentCount</span>
+                                </li>
+
+                                <li class="assessments-feature">
+                                    <i class="fa fa-check-square-o"></i>
+                                    <span class="label">Assessments</span>
+                                    @if (Model.Assessments == true)
+                                    {
+                                        <span class="value">No</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="value">Yes</span>
+                                    }
+
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="btn-part">
+                            <a asp-controller="Contact" asp-action="Index" class="btn readon2 orange">$@Model.Course.Fea.ToString("##")</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Subscribe start -->
+    <partial name="_SubscribePartial" model="@Model.Subscribe" />
+</div>

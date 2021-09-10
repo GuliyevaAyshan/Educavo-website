@@ -1,0 +1,132 @@
+﻿@model EduCavoFinal.Models.Courses
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Create Course</h4>
+
+                    <form asp-area="admin" asp-controller="courses" asp-action="create" method="post" class="forms-sample" enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <label asp-for="@Model.VideoFile" for="formFile" class="form-label">Video</label>
+                            <input asp-for="@Model.VideoFile" type="file" class="form-control" id="formFile" placeholder="Video">
+                            <span class="text-danger" asp-validation-for="@Model.VideoFile"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.ImageFile" for="formFile" class="form-label">Image</label>
+                            <input asp-for="@Model.ImageFile" type="file" class="form-control" id="formFile" placeholder="Image">
+                            <span class="text-danger" asp-validation-for="@Model.ImageFile"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Title" for="title">Title</label>
+                            <input asp-for="@Model.Title" type="text" class="form-control" id="title" placeholder="Title">
+                            <span class="text-danger" asp-validation-for="@Model.Title"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.AddedDate" for="AddedDate">AddedDate</label>
+                            <input asp-for="@Model.AddedDate" type="datetime" class="form-control" id="AddedDate" placeholder="AddedDate">
+                            <span class="text-danger" asp-validation-for="@Model.AddedDate"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Desc" for="text">Description</label>
+                            <textarea asp-for="@Model.Desc" type="text" class="form-control" id="Desc" placeholder="Description"></textarea>
+                            <span class="text-danger" asp-validation-for="@Model.Desc"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="mb-3">
+                                <label asp-for="@Model.StudentCount" for="StudentCount">StudentCount</label>
+                                <input asp-for="@Model.StudentCount" class="form-control" type="number" placeholder="StudentCount">
+                            </div>
+                            <span class="text-danger" asp-validation-for="@Model.StudentCount"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="mb-3">
+                                <label asp-for="@Model.Fea" for="Fea" class="form-label">Fea</label>
+                                <input asp-for="@Model.Fea" class="form-control" type="number" id="Fea" placeholder="Fea">
+                            </div>
+                            <span class="text-danger" asp-validation-for="@Model.Fea"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="mb-3">
+                                <label asp-for="@Model.Duration" for="Duration" class="form-label">Duration</label>
+                                <input asp-for="@Model.Duration" class="form-control" type="number" id="Duration" placeholder="Duration">
+                            </div>
+                            <span class="text-danger" asp-validation-for="@Model.Duration"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="mb-3">
+                                <label asp-for="@Model.Lectures" for="Lectures" class="form-label">Lectures</label>
+                                <input asp-for="@Model.Lectures" class="form-control" type="number" id="Lectures" placeholder="Lectures">
+                            </div>
+                            <span class="text-danger" asp-validation-for="@Model.Lectures"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="mb-3">
+                                <label asp-for="@Model.Quizzes" for="Quizzes" class="form-label">Quizzes</label>
+                                <input asp-for="@Model.Quizzes" class="form-control" type="number" id="Quizzes" placeholder="Quizzes">
+                            </div>
+                            <span class="text-danger" asp-validation-for="@Model.Quizzes"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Category</label>
+                            <select asp-for="@Model.CategoryId" asp-items="@(new SelectList(ViewBag.Categories, "Id","Name"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.CategoryId"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">SkillLevel</label>
+                            <select asp-for="@Model.SkillLevelId" asp-items="@(new SelectList(ViewBag.SkillLevel, "Id","Name"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.SkillLevelId"></span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">PriceLevel</label>
+                            <select asp-for="@Model.PriceLevelId" asp-items="@(new SelectList(ViewBag.PriceLevel, "Id","Levels"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.PriceLevelId"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">DurationTimes</label>
+                            <select asp-for="@Model.DurationTimeId" asp-items="@(new SelectList(ViewBag.DurationTimes, "Id","Times"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.DurationTimeId"></span>
+
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label" for="exampleFormControlSelect2">CourseTypes</label>
+                            <select multiple asp-for="@Model.CourseTypesId" asp-items="@(new SelectList(ViewBag.CourseTypes, "Id","Types"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.CourseTypesId"></span>
+
+                        </div>
+                        <div class="form-group form-check">
+                            <div class="mb-3">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="Assessments" /> @Html.DisplayNameFor(model => model.Assessments)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.WhatLearn" for="text">WhatLearn</label>
+                            <textarea asp-for="@Model.WhatLearn" type="text" class="form-control" id="WhatLearn" placeholder="WhatLearn"></textarea>
+                            <span class="text-danger" asp-validation-for="@Model.WhatLearn"></span>
+                        </div>
+                        <button type="submit" class="btn btn-success mr-2">Create</button>
+                        <button asp-area="admin" asp-controller="courses" asp-action="index" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

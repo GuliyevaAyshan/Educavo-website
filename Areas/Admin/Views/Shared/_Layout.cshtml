@@ -1,0 +1,452 @@
+﻿
+@using Microsoft.AspNetCore.Http
+
+
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    string userString = HttpContextAccessor.HttpContext.Session.GetString("ValidUser");
+    User user = null;
+
+    if (userString != null)
+    {
+        user = JsonConvert.DeserializeObject<User>(userString);
+    }
+
+}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Educavo Admin</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/areas/assets/images/fav-orange.png">
+
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/areas/assets/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="~/areas/assets/vendors/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/areas/assets/vendors/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="~/areas/assets/vendors/feather/feather.css">
+    <link rel="stylesheet" href="~/areas/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="~/areas/assets/vendors/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/areas/assets/vendors/jquery-bar-rating/fontawesome-stars.css">
+
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+
+
+    <link rel="stylesheet" href="~/areas/assets/vendors/mdi/css/materialdesignicons.min.css">
+
+
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+
+
+
+    <link rel="stylesheet" href="~/areas/assets/css/vertical-layout-light/style.css">
+    <!-- endinject -->
+
+</head>
+
+<body>
+    <div class="container-scroller">
+
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+                <a class="navbar-brand brand-logo" asp-controller="home" asp-action="index"><img src="~/areas/assets/images/dark-logo.png" style="height: 40px !important" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" asp-controller="home" asp-action="index"><img src="~/areas/assets/images/pre-logo1.png" height="47" alt="logo" /></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="icon-menu"></span>
+                </button>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown d-none d-lg-flex">
+                        <a class="nav-link dropdown-toggle nav-btn" id="actionDropdown" href="#" data-toggle="dropdown">
+                            <span class="btn">+ Create new</span>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown dropdown-left" aria-labelledby="actionDropdown">
+                            <a class="dropdown-item" asp-area="admin" asp-controller="account" asp-action="Register">
+                                <i class="icon-user text-primary"></i>
+                                Account
+                            </a>
+                            
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_settings-panel.html -->
+            <div class="theme-setting-wrapper">
+                <div id="settings-trigger"><i class="mdi mdi-multiplication"></i></div>
+                <div id="theme-settings" class="settings-panel">
+                    <i class="settings-close mdi mdi-close"></i>
+                    <p class="settings-heading">SIDEBAR SKINS</p>
+                    <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+                    <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+                    <p class="settings-heading mt-2">HEADER SKINS</p>
+                    <div class="color-tiles mx-0 px-4">
+                        <div class="tiles primary"></div>
+                        <div class="tiles success"></div>
+                        <div class="tiles warning"></div>
+                        <div class="tiles danger"></div>
+                        <div class="tiles pink"></div>
+                        <div class="tiles info"></div>
+                        <div class="tiles dark"></div>
+                        <div class="tiles default"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="right-sidebar" class="settings-panel">
+                <i class="settings-close mdi mdi-close"></i>
+                <ul class="nav nav-tabs" id="setting-panel" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="todo-tab" data-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content" id="setting-content">
+                    <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
+                        <div class="add-items d-flex px-3 mb-0">
+                            <form class="form w-100">
+                                <div class="form-group d-flex">
+                                    <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
+                                    <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="list-wrapper px-3">
+                            <ul class="d-flex flex-column-reverse todo-list">
+                                <li>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="checkbox" type="checkbox">
+                                            Team review meeting at 3.00 PM
+                                        </label>
+                                    </div>
+                                    <i class="remove mdi mdi-close-circle-outline"></i>
+                                </li>
+                                <li>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="checkbox" type="checkbox">
+                                            Prepare for presentation
+                                        </label>
+                                    </div>
+                                    <i class="remove mdi mdi-close-circle-outline"></i>
+                                </li>
+                                <li>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="checkbox" type="checkbox">
+                                            Resolve all the low priority tickets due today
+                                        </label>
+                                    </div>
+                                    <i class="remove mdi mdi-close-circle-outline"></i>
+                                </li>
+                                <li class="completed">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="checkbox" type="checkbox" checked>
+                                            Schedule meeting for next week
+                                        </label>
+                                    </div>
+                                    <i class="remove mdi mdi-close-circle-outline"></i>
+                                </li>
+                                <li class="completed">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="checkbox" type="checkbox" checked>
+                                            Project review
+                                        </label>
+                                    </div>
+                                    <i class="remove mdi mdi-close-circle-outline"></i>
+                                </li>
+                            </ul>
+                        </div>
+                      
+                    </div>
+                    <!-- To do section tab ends -->
+                    <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
+                        <div class="d-flex align-items-center justify-content-between border-bottom">
+                            <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+                            <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</small>
+                        </div>
+                     
+                    </div>
+                    <!-- chat tab ends -->
+                </div>
+            </div>
+            <!-- partial -->
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+
+                    <!-- Users -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#users" aria-expanded="true" aria-controls="icons">
+                            <i class="icon-user-female menu-icon"></i>
+                            <span class="menu-title">Accounts</span>
+                        </a>
+                        <div class="collapse" id="users">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="account" asp-action="login">Login</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="account" asp-action="Register">Register</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="users" asp-action="index">Users</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="customers" asp-action="index">Customers</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <!-- Home Page -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#home" aria-expanded="false" aria-controls="tables">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Home page</span>
+                        </a>
+                        <div class="collapse" id="home">
+                            <ul class="nav flex-column sub-menu">
+
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="admin" asp-controller="Sliders" asp-action="index">Sliders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="admin" asp-controller="offerstates" asp-action="index">Offers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="admin" asp-controller="testimonials" asp-action="index">Testimonials</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+                    <!-- About Page -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#about" aria-expanded="false" aria-controls="tables">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">About page</span>
+                        </a>
+                        <div class="collapse" id="about">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="admin" asp-controller="abouts" asp-action="index">About us</a>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="admin" asp-controller="studentsfeedbacks" asp-action="index">Student`s Feedbacks</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- Courses Page -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#courses" aria-expanded="false" aria-controls="tables">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Courses page</span>
+                        </a>
+                        <div class="collapse" id="courses">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="admin" asp-controller="Courses" asp-action="index">Courses List</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="admin" asp-controller="coursetypes" asp-action="index">Course Types</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="admin" asp-controller="reviews" asp-action="index">Reviews</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- Team Page -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#team" aria-expanded="false" aria-controls="tables">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Team Page</span>
+                        </a>
+                        <div class="collapse" id="team">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="teams" asp-action="index">Team memebers</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="teamtocourses" asp-action="index">Team & Course relation</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="contacttoteam" asp-action="index">Team Contacts</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="skilltoteams" asp-action="index">Team skills</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="socialtoteams" asp-action="index">Team socials</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- Gallery Page -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#gallery" aria-expanded="false" aria-controls="tables">
+                            <i class="icon-picture menu-icon"></i>
+                            <span class="menu-title">Gallery Page</span>
+                        </a>
+                        <div class="collapse" id="gallery">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="galleries" asp-action="index">Galleries</a></li>
+
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- Faq Page -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#faq" aria-expanded="false" aria-controls="tables">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Faq page</span>
+                        </a>
+                        <div class="collapse" id="faq">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="faqtitles" asp-action="index">Faq Title</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="faqs" asp-action="index">Faqs List</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="faqtocourses" asp-action="index">Faq & Course relation</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- Blog Page -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#blog" aria-expanded="false" aria-controls="tables">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Blog Page</span>
+                        </a>
+                        <div class="collapse" id="blog">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="blog" asp-action="index">Blogs</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="comments" asp-action="index">Comments</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <!-- Contact Page -->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#contact" aria-expanded="false" aria-controls="tables">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Contact page</span>
+                        </a>
+                        <div class="collapse" id="contact">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="contacts" asp-action="index">Contacts</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="admin" asp-controller="messages" asp-action="index">Messages</a>
+                                </li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="socials" asp-action="index">Socials List</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="subscribes" asp-action="index">Subscribes</a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#universal" aria-expanded="false" aria-controls="universal">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">Universal</span>
+                        </a>
+                        <div class="collapse" id="universal">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="categorie" asp-action="index"> Categories </a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="admin" asp-controller="curriculumtitles" asp-action="index">Curriculum titles</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="admin" asp-controller="curricula" asp-action="index">Curriculum List</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="admin" asp-controller="durationtimes" asp-action="index">Duration Times</a>
+                                </li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="pricelevels" asp-action="index"> Price Levels </a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="skilllevels" asp-action="index"> Skill Levels </a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="admin" asp-controller="skills" asp-action="index"> Skills </a></li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://mail.google.com/mail/u/0/#inbox">
+                            <i class="icon-envelope menu-icon"></i>
+                            <span class="menu-title">E-mail</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="admin" asp-controller="clock" asp-action="index">
+                            <i class="icon-clock menu-icon"></i>
+                            <span class="menu-title">Clock</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="admin" asp-controller="calculator" asp-action="index">
+                            <i class="mdi mdi-calculator menu-icon"></i>
+                            <span class="menu-title">Calculator</span>
+                        </a>
+                    </li>
+                    <li class="mt-4 nav-item nav-progress">
+                        <h6 class="nav-progress-heading mt-4 font-weight-normal">
+                            Today's Student's count
+                            <span class="nav-progress-sub-heading">
+                               5 K
+                            </span>
+                        </h6>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <h6 class="nav-progress-heading mt-4 font-weight-normal">
+                            Student's Graduates
+                            <span class="nav-progress-sub-heading">
+                               95 %
+                            </span>
+                        </h6>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <!-- partial -->
+            @RenderBody()
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+
+
+
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="~/areas/assets/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <script src="~/areas/assets/vendors/chart.js/Chart.min.js"></script>
+    <script src="~/areas/assets/vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="~/areas/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/areas/assets/vendors/jquery-bar-rating/jquery.barrating.min.js"></script>
+    <script src="~/areas/assets/vendors/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/areas/assets/vendors/raphael/raphael.min.js"></script>
+    <script src="~/areas/assets/vendors/morris.js/morris.min.js"></script>
+
+    <!-- ckeditor -->
+    <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+    <script src="~/areas/assets/js/jquery.counterup.min.js"></script>
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="~/areas/assets/js/off-canvas.js"></script>
+    <script src="~/areas/assets/js/hoverable-collapse.js"></script>
+    <script src="~/areas/assets/js/template.js"></script>
+    <script src="~/areas/assets/js/settings.js"></script>
+    <script src="~/areas/assets/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="~/areas/assets/js/dashboard.js"></script>
+    <!-- End custom js for this page-->
+
+    <script src="https://cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js" integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+    <script src="~/areas/assets/js/ckeditor.js"></script>
+
+</body>
+
+</html>

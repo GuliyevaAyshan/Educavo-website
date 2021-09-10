@@ -1,0 +1,117 @@
+﻿@model VMTeam
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    VMBreadcrumb vmBreadcrumb = new VMBreadcrumb() { Preview = "Home", Current = "Team Details" };
+}
+
+<!-- Main content Start -->
+<div class="main-area">
+    <!-- Breadcrumbs Start -->
+    <partial name="_BreadcrumbPartial" model="vmBreadcrumb" />
+    <!-- Profile Section -->
+    <section class="profile-section orange-color pt-100 pb-100 md-pt-70 md-pb-70">
+        <div class="container">
+            <div class="row clearfix">
+                <!-- Image Section -->
+                <div class="image-column col-lg-5 md-mb-50">
+                    <div class="inner-column mb-50 md-mb-0">
+                        <div class="image">
+                            <img src="~/Uploads/Images/team/@Model.Team.Image"alt="" />
+                        </div>
+                        <div class="team-content text-center">
+                            <h3>@Model.Team.FullName</h3>
+                            <div class="text">@Model.Team.Position</div>
+                            <ul class="personal-info">
+                                <li class="email">
+                                    <span><i class="glyph-icon flaticon-email"> </i> </span>
+                                    <a href="mailto:@Model.Team.Email">@Model.Team.Email</a>
+                                </li>
+                                <li class="phone">
+                                    <span><i class="glyph-icon flaticon-call"></i></span>
+                                    <a href="tel:@Model.Team.Phone">@Model.Team.Phone</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="social-box">
+                            @foreach (var item in Model.Team.SocialToTeam.Take(4))
+                            {
+                                <a href="@item.Social.Link"><i class="@item.Social.Icon"></i></a>
+                            }
+                         
+                        </div>
+                    </div>
+                </div>
+                <!-- Content Section -->
+                <div class="content-column col-lg-7 pl-60 pt-50 md-pl-15 md-pt-0">
+                    <div class="inner-column">
+                        <h2>@Model.Team.FullName</h2>
+                        <h4>A certified instructor From Educavo</h4>
+                        <!-- Student List -->
+                        <ul class="student-list">
+                            <li>@Model.Team.TotalStudent.ToString("##,###")</li>
+                            <li>
+                                @{
+
+                                    decimal rating = 0;
+                                    decimal finalRating = 0;
+                                    foreach (var item2 in Model.Team.Review)
+                                    {
+                                        rating += item2.Rating;
+                                    }
+                                    if (Model.Team.Review.Count != 0)
+                                    {
+                                        finalRating = (rating / Model.Team.Review.Count);
+                                    }
+                                    <span class="theme_color">@finalRating.ToString("##")</span>
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= finalRating)
+                                        {
+
+                                         <span class="fa fa-star"></span>
+
+                                        }
+
+                                    }
+                            <span>(@Model.Team.TotalRating Rating)</span>
+                                }
+                               
+                            </li>
+                            <br />
+                            <li>@Model.Team.Review.Count() Reviews</li>
+                        </ul>
+                        <h5>About Me</h5>
+                        <p>@Model.Team.Info</p>
+                        <div class="team-skill mb-50">
+                            <h3 class="skill-title">Our Teacher Skill:</h3>
+                            <div class="row">
+                               
+                                    @foreach (var item in Model.Team.SkillToTeam)
+	{           <div class="col-md-6 sm-mb-20">
+                                <br />
+                         <div class="progress ga-progress">
+                         <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width:95%">
+                           <span class="pb-label">@item.Skill.Name</span>
+                              <span class="pb-percent">@item.Persentage.ToString("##")%</span>
+                                  </div> 
+                             </div>
+                   </div>
+    }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="content-part">
+                        <h3 class="title">25 That Prevent Job Seekers From Overcoming Failure</h3>
+                        <p>
+                            @Model.Team.TeamOvercoming
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Subscribe start -->
+    <partial name="_SubscribePartial" model="@Model.Subscribe" />

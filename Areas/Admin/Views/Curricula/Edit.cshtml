@@ -1,0 +1,63 @@
+﻿@model EduCavoFinal.Models.Curriculum
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Update Curriculum</h4>
+
+                    <form asp-area="admin" asp-controller="curricula" asp-action="edit" method="post" class="forms-sample" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Subtitle" class="control-label"></label>
+                            <input asp-for="Subtitle" class="form-control" />
+                            <span asp-validation-for="Subtitle" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.VideoFile" for="formFile" class="form-label">Video</label>
+                            <input asp-for="@Model.VideoFile" type="file" class="form-control" id="formFile" placeholder="Video">
+                            <span class="text-danger" asp-validation-for="@Model.VideoFile"></span>
+                        </div>
+                        <input type="hidden" asp-for="@Model.Id" />
+                        <input type="hidden" asp-for="@Model.Video" />
+                        <div class="form-group">
+                            <label asp-for="VideoDuration" class="control-label"></label>
+                            <input asp-for="VideoDuration" class="form-control" />
+                            <span asp-validation-for="VideoDuration" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">SkillLevel</label>
+                            <select asp-for="@Model.CoursesId" asp-items="@(new SelectList(ViewBag.Courses, "Id","Title"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.CoursesId"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Collapse" class="control-label"></label>
+                            <input asp-for="Collapse" class="form-control" />
+                            <span asp-validation-for="Collapse" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">SkillLevel</label>
+                            <select asp-for="@Model.CurriculumTitlesId" asp-items="@(new SelectList(ViewBag.CurriculumTitles, "Id","Title"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.CurriculumTitlesId"></span>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-success mr-2">Update</button>
+                        <button asp-area="admin" asp-controller="curricula" asp-action="index" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

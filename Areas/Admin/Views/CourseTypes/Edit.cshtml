@@ -1,0 +1,30 @@
+﻿@model EduCavoFinal.Models.CourseTypes
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Update Course Types</h4>
+
+                    <form asp-area="admin" asp-controller="coursetypes" asp-action="edit" method="post" class="forms-sample" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <div class="form-group">
+                            <label asp-for="Types" class="control-label"></label>
+                            <input asp-for="Types" class="form-control" />
+                            <span asp-validation-for="Types" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-success mr-2">Update</button>
+                        <button asp-area="admin" asp-controller="coursetypes" asp-action="index" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

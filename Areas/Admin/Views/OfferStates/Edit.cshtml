@@ -1,0 +1,40 @@
+﻿@model EduCavoFinal.Models.OfferState
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Update Offers</h4>
+                    <form asp-area="admin" asp-controller="offerstates" asp-action="edit" method="post" class="forms-sample" enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <label asp-for="@Model.ImageFile" for="formFile" class="form-label">Image</label>
+                            <input asp-for="@Model.ImageFile" type="file" class="form-control" id="formFile" placeholder="Video">
+                            <span class="text-danger" asp-validation-for="@Model.ImageFile"></span>
+                            <input type="hidden" asp-for="@Model.Id" />
+                            <input type="hidden" asp-for="@Model.Image" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Title" for="Title">Title</label>
+                            <input asp-for="@Model.Title" type="text" class="form-control" id="Title" placeholder="Title">
+                            <span class="text-danger" asp-validation-for="@Model.Title"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Desc" for="text">Description</label>
+                            <textarea asp-for="@Model.Desc" type="text" class="form-control" id="Desc" placeholder="Description"></textarea>
+                            <span class="text-danger" asp-validation-for="@Model.Desc"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-success mr-2">Update</button>
+                        <button asp-area="admin" asp-controller="offerstates" asp-action="index" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

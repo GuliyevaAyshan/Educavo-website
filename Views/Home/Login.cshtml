@@ -1,0 +1,51 @@
+﻿@model VMCustomer
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    VMBreadcrumb vmBreadcrumb = new VMBreadcrumb() { Preview = "Home", Current = "My Account" };
+}
+
+<!-- Main content Start -->
+<div class="main-area">
+    <!-- Breadcrumbs Start -->
+    <partial name="_BreadcrumbPartial" model="vmBreadcrumb" />
+    <!-- My Account Section Start -->
+    <div class="ga-login pt-100 pb-100 md-pt-70 md-pb-70">
+        <div class="container">
+            <div class="noticed">
+                <div class="main-part">
+                    <div class="method-account">
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("mailSent") != null)
+                        {
+                            HttpContextAccessor.HttpContext.Session.Remove("mailSent");
+                            <div class="alert alert-info">
+                                Please chech your email account for resetting password!
+                            </div>
+                        }
+                        <h2 class="login">Login</h2>
+                        <form asp-controller="Home" asp-action="login" method="post">
+                            <div asp-validation-summary="All" class="text-danger">
+                                <input type="email" asp-for="Email" placeholder="Email" required>
+                             
+                                <input type="password" asp-for="Password" placeholder="Password" required>
+                               
+                            </div>
+                            <div class="login-toggle-btn">
+
+                                <a asp-controller="account" asp-action="forgetpassword">Forgot Password?</a>
+                            </div>
+
+                            <button type="submit" class="readon submit-btn">login</button>
+                            <div class="last-password">
+                                <p>Not registered? <a asp-controller="Home" asp-action="Register">Create an account</a></p>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

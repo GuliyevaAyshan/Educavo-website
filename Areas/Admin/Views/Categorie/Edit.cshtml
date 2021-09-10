@@ -1,0 +1,45 @@
+﻿@model EduCavoFinal.Models.Categories
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Update Categorie</h4>
+
+                    <form asp-area="admin" asp-controller="categorie" asp-action="edit" method="post" class="forms-sample" enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <label asp-for="@Model.Name" for="Name">Name</label>
+                            <input asp-for="@Model.Name" type="text" class="form-control" id="Name" placeholder="Name">
+                            <span class="text-danger" asp-validation-for="@Model.Name"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.ImageFile" for="formFile" class="form-label">Image</label>
+                            <input asp-for="@Model.ImageFile" type="file" class="form-control" id="formFile" placeholder="Image">
+                            <span class="text-danger" asp-validation-for="@Model.ImageFile"></span>
+                        </div>
+                        <input type="hidden" asp-for="@Model.Image" />
+                        <div class="form-group">
+                            <label asp-for="@Model.OnlineCategoriesCount" for="OnlineCategoriesCount">OnlineCategoriesCount</label>
+                            <textarea asp-for="@Model.OnlineCategoriesCount" type="number" class="form-control" id="OnlineCategoriesCount" placeholder="OnlineCategoriesCount"></textarea>
+                            <span class="text-danger" asp-validation-for="@Model.OnlineCategoriesCount"></span>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="IsOnline" /> @Html.DisplayNameFor(model => model.IsOnline)
+                            </label>
+                        </div>
+                        <input type="hidden" asp-for="@Model.Id" />
+                        <button type="submit" class="btn btn-success mr-2">Update</button>
+                        <button asp-area="admin" asp-controller="categorie" asp-action="index" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

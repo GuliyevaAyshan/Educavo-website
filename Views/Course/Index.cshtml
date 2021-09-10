@@ -1,0 +1,266 @@
+﻿@model VMCourses
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    VMBreadcrumb vmBreadcrumb = new VMBreadcrumb() { Preview = "Home", Current = "Course" };
+    <style>
+        label {
+            font-weight: normal
+        }
+
+        .col-lg-4 {
+            float: right !important;
+        }
+
+
+        .clearfix::after {
+            display: block;
+           clear:both;
+           content:"";
+        }
+    
+    </style>
+
+}
+
+<!-- Main Start -->
+<div class="main-area">
+    <!-- Breadcrumbs Start -->
+    <partial name="_BreadcrumbPartial" model="vmBreadcrumb" />
+    <!-- Popular Course Start -->
+    <div class="ga-popular-courses style1 course-view-style orange-color ga-inner-blog white-bg pt-100 pb-100 md-pt-70 md-pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-12 order-last">
+                    <div class="widget-area">
+                        <div class="search-widget mb-50">
+                            <h3 class="widget-title">Course Search</h3>
+                            <form class="search-wrap" asp-controller="Course" asp-action="index" method="get">
+                                <input type="search" placeholder="Searching..." name="searchData" class="search-input">
+                                <button  method="get" type="submit" ><i class=" flaticon-search"></i></button>
+                            </form>
+                        </div>
+                        <div class="widget-archives mb-50">
+                            <h3 class="widget-title">Filter By</h3>
+                            <div class="filter-widget">
+                                <!-- Skills Form -->
+                                <div class="filter-form">
+                                    <form asp-controller="Course" asp-action="index" method="get">
+                                        <div class="single-filter mb-30">
+                                            <h5>Skill Level</h5>
+                                            <!-- Radio Box -->
+                                        @foreach (var item in Model.SkillLevel)
+                                        {
+                                          
+                                        <div class="radio-box form-group">
+                                            <input type="radio" asp-for="@Model.skillLevelId" id="@item.Name" value="@item.Id">
+                                            <label for="@item.Name">@item.Name </label>
+                                        </div>
+                                        }
+                                        </div>
+
+                                        <div class="single-filter mb-30">
+                                            <h5>Price Level</h5>
+                                            <!-- Radio Box -->
+                                            @foreach (var item in Model.PriceLevel)
+                                            { <div class="radio-box form-group">
+                                                    <input type="radio" asp-for="@Model.priceLevelId" id="@item.Levels" value="@item.Id">
+                                                    <label for="@item.Levels"> @item.Levels (@Model.Courses.Where(t => t.PriceLevel.Levels == item.Levels).Count())</label>
+                                                </div>
+                                            }
+                                           
+                                        </div>
+
+                                        <div class="single-filter mb-30">
+                                            <h5>Duration Time</h5>
+                                            <!-- Radio Box -->
+                                            @foreach (var item in Model.DurationTime)
+                                            {
+                                                <div class="radio-box form-group">
+                                                    <input type="radio" asp-for="@Model.durationTimeId" id="@item.Times" value="@item.Id">
+                                                    <label for="@item.Times">@item.Times (@Model.Courses.Where(t => t.DurationTime.Times==item.Times).Count())</label>
+                                                </div>
+                                            }
+                                       </div>
+
+                                        <div class="single-filter mb-30">
+                                            <h5>Course Type</h5>
+
+                                            @foreach (var item in Model.CourseTypes)
+                                            {
+                                        <div class="check-box form-group mb-0">
+                                            <input type="checkbox" name="courseTypesId" id="@item.Types" value="@ViewBag.CourseType">
+                                         
+
+
+                                            <label for="@item.Types">@item.Types (@Model.Courses.Where(c => c.CourseTypes.Types == item.Types).Count())</label>
+                                        </div>
+                                            }
+
+
+                                        </div>
+
+                                        @*<div class="single-filter mb-30">
+                                            <h5>Instructor</h5>
+                                            <div class="check-box form-group mb-0">
+                                                <input type="checkbox" id="check8" name="check8" value="check8" checked>
+                                                <label for="check8">Stuard (5)</label>
+                                            </div>
+                                            <div class="check-box form-group mb-0">
+                                                <input type="checkbox" id="check9" name="check9" value="check9">
+                                                <label for="check9">Benjamin (4)</label>
+                                            </div>
+                                            <div class="check-box form-group mb-0">
+                                                <input type="checkbox" id="check10" name="check10" value="check10">
+                                                <label for="check10">Mickel (7)</label>
+                                            </div>
+                                            <div class="check-box form-group mb-0">
+                                                <input type="checkbox" id="check11" name="check11" value="check11">
+                                                <label for="check11">Johnson (2)</label>
+                                            </div>
+                                            <div class="check-box form-group mb-0">
+                                                <input type="checkbox" id="check12" name="check12" value="check12">
+                                                <label for="check12">Elijabeth (5)</label>
+                                            </div>
+                                            <div class="check-box form-group mb-0">
+                                                <input type="checkbox" id="check13" name="check13" value="check13">
+                                                <label for="check13">Rebeka (4)</label>
+                                            </div>
+                                        </div>*@
+
+                                        <div class="form-group mb-0">
+                                            <input class="readon2 orange" type="submit" value="Submit Now">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-archives mb-50">
+                            <h3 class="widget-title">Course Categories</h3>
+                            <ul class="categories">
+                                @foreach (var item in Model.Categories.Where(c => (c.IsOnline == false)))
+                                {
+                                    <li><a asp-controller="Course" asp-action="Index" asp-route-catId="@item.Id">@item.Name</a></li>
+                                }
+                             
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 pr-50 md-pr-15">
+                    <div class="course-search-part">
+                        <div class="course-view-part">
+                            <div class="view-icons">
+                                <a href="#" class="view-grid mr-10"><i class="fa fa-th-large"></i></a>
+                                <a href="#" class="view-list"><i class="fa fa-list-ul"></i></a>
+                            </div>
+                            <div class="view-text">Showing @Model.Courses.Count() results</div>
+                        </div>
+                        <div class="type-form">
+                            <form asp-controller="Course" asp-action="Index">
+                                <!-- Form Group -->
+                                <div class="form-group mb-0">
+                              
+                                    <!--<div class="custom-select-box">
+        <-->
+                                    @*select id="timing">
+            <option>Default</option>
+            <option>Newest</option>
+            <option>Old</option>
+        </select>*@
+                                    <!--</div>-->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="course-part clearfix">
+                       
+                        @foreach (var item in Model.Courses)
+	                       {
+                            <div class="courses-item">
+                                     <div class="img-part">
+                            <img src="~/Uploads/Images/@item.Image" alt="">
+                                      </div>
+                                        <div class="content-part">
+                            <ul class="meta-part">
+                                <li>
+                                    @if (@item.Fea == 0)
+                                    {
+                                        <span class="price">Free</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="price">$@item.Fea.ToString("##")</span>
+                                    }
+                                </li>
+                                <li><a class="categorie" href="#">@item.CourseTypes.Types</a></li>
+                            </ul>
+                            <h3 class="title"><a asp-controller="Course" asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h3>
+                            <div class="bottom-part">
+                                <div class="info-meta">
+                                    <ul>
+                                        <li class="user"><i class="fa fa-user"></i> @item.StudentCount</li>
+                                        <li class="ratings">
+                                            @{
+
+                                                decimal rating = 0;
+                                                decimal finalRating = 0;
+                                                foreach (var item2 in Model.Review)
+                                                {
+                                                    rating += item2.Rating;
+                                                }
+                                                if (Model.Review.Count != 0)
+                                                {
+                                                    finalRating = (rating / Model.Review.Count);
+                                                }
+
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    if (i <= finalRating)
+                                                    {
+
+                                                        <i class="fa fa-star"></i>
+
+                                                    }
+
+                                                }
+
+                                            }
+                                            @(Model.Review.Count)
+                                        </li>
+
+                                        </ul>
+                                </div>
+                                <div class="btn-part">
+                                    <a asp-controller="Course" asp-action="Details" asp-route-id="@item.Id"><i class="flaticon-right-arrow"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+	               }
+                     
+                    </div>
+                    <div class="pagination-area orange-color text-center mt-30 md-mt-0">
+                        <ul class="pagination-part">
+                         
+                            <li class="page-item @(ViewBag.ActivePage==1?"disabled":"")">
+                            <a asp-all-route-data="@ViewBag.Filter" asp-route-page="@(ViewBag.ActivePage==1?1:ViewBag.ActivePage-1)">Prev<i class="fa fa-long-arrow-left"></i></a>
+                            </li>
+                            @for (int i = 1; i <= ViewBag.PageCount; i++)
+                            {
+                                <li class="page-item @(ViewBag.ActivePage==i?"active":"")"><a asp-controller="course" asp-action="Index" asp-all-route-data="@ViewBag.Filter" asp-route-page="@i">@i</a></li>
+                            }
+
+                            <li class="page-item @(ViewBag.ActivePage==ViewBag.PageCount?"disabled":"")">
+                            <a asp-controller="course" asp-action="Index" asp-all-route-data="@ViewBag.Filter" asp-route-page="@(ViewBag.ActivePage==ViewBag.PageCount?ViewBag.PageCount:ViewBag.ActivePage+1)">Next<i class="fa fa-long-arrow-right"></i></a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Subscribe start -->
+    <partial name="_SubscribePartial" model="@Model.Subscribe" />

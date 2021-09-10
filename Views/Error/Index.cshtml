@@ -1,0 +1,21 @@
+﻿@model VMErrorPage
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Main content Start -->
+<div class="main-area">
+    <!-- Erro 404 Page Start Here -->
+    <div id="ga-page-error" class="ga-page-error">
+        <div class="error-text">
+            <h1 class="error-code">404</h1>
+            <h3 class="error-message">Page Not Found</h3>
+            <form asp-controller="course" asp-action="index">
+                <input type="search" placeholder="Search..." name="searchData" class="search-input" value="">
+                <button type="submit" value="Search"><i class="fa fa-search"></i></button>
+            </form>
+            <a class="readon orange-btn"asp-controller="Home" asp-action="index" title="HOME">Back to Homepage</a>
+        </div>
+    </div>
+</div>

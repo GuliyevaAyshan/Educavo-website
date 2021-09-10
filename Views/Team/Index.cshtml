@@ -1,0 +1,40 @@
+﻿@model VMTeam
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    VMBreadcrumb vmBreadcrumb = new VMBreadcrumb() { Preview = "Home", Current = "Team" };
+}
+<!-- Main content Start -->
+<div class="main-area">
+    <!-- Breadcrumbs Start -->
+    <partial name="_BreadcrumbPartial" model="vmBreadcrumb" />
+    <!-- Team Section Start -->
+    <div id="ga-team" class="ga-team style1 orange-color pt-94 pb-100 md-pt-64 md-pb-70 white-bg">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model.Teams)
+                {
+                    <div class="col-lg-4 col-sm-6 mb-30">
+                        <div class="team-item">
+                            <img src="~/Uploads/Images/team/@item.Image" alt="">
+                            <div class="content-part">
+                                <h4 class="name"><a asp-controller="Team" asp-action="Details" asp-route-id="@item.Id">@item.FullName</a></h4>
+                                <span class="designation">@item.Position</span>
+                                <ul class="social-links">
+                                    @foreach (var item2 in Model.Socials.Take(4))
+                                    {
+                                        <li><a href="@item2.Link"><i class="@item2.Icon"></i></a></li>
+                                    }
+
+                                
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+    <!-- Subscribe start -->
+    <partial name="_SubscribePartial" model="@Model.Subscribe" />

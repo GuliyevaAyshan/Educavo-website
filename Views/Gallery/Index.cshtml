@@ -1,0 +1,28 @@
+﻿@model VMGallery
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    VMBreadcrumb vmBreadcrumb = new VMBreadcrumb() { Preview = "Home", Current = "Gallery" };
+}
+
+<!-- Main content Start -->
+<div class="main-area">
+    <!-- Breadcrumbs Start -->
+    <partial name="_BreadcrumbPartial" model="vmBreadcrumb" />
+    <!-- Gallery Section Start -->
+    <div class="ga-gallery pt-100 pb-100 md-pt-70 md-pb-70">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model.Galleries)
+	{
+                <div class="col-lg-4 mb-30 col-md-6">
+                    <div class="gallery-img">
+                        <a class="image-popup" href="~/Uploads/Images/@item.Image"><img src="~/Uploads/Images/@item.Image" alt=""></a>
+                    </div>
+                </div>
+	}                             
+            </div>
+        </div>
+    </div>
+    <!-- Subscribe start -->
+    <partial name="_SubscribePartial" model="@Model.Subscribe" />

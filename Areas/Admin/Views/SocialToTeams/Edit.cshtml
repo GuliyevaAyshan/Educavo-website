@@ -1,0 +1,48 @@
+﻿@model EduCavoFinal.Models.SocialToTeam
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Update Team&Socials relation</h4>
+
+                    <form asp-area="admin" asp-controller="socialtoteams" asp-action="edit" method="post" class="forms-sample" enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Icon</label>
+                            <select asp-for="@Model.SocialId" asp-items="@(new SelectList(ViewBag.Social, "Id","Icon"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.SocialId"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Link</label>
+                            <select asp-for="@Model.SocialId" asp-items="@(new SelectList(ViewBag.Social, "Id","Link"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.SocialId"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Team</label>
+                            <select asp-for="@Model.TeamId" asp-items="@(new SelectList(ViewBag.Team, "Id","FullName"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.TeamId"></span>
+
+                        </div>
+
+                        <input type="hidden" asp-for="@Model.Id" />
+
+                        <button type="submit" class="btn btn-success mr-2">Update</button>
+                        <button asp-area="admin" asp-controller="socialtoteams" asp-action="index" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

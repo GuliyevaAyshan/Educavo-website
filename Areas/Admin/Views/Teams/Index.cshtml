@@ -1,0 +1,111 @@
+﻿@model IEnumerable<EduCavoFinal.Models.Team>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title ml-2">Team members</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Image
+                                    </th>
+                                    <th>
+                                        FullName
+                                    </th>
+                                    <th>
+                                        Position
+                                    </th>
+                                    <th>
+                                        Info
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                    <th>
+                                        Phone
+                                    </th>
+                                    <th>
+                                        TotalStudent
+                                    </th>
+                                    <th>
+                                        TotalRating
+                                    </th>
+                                    <th>
+                                        TeamOvercoming
+                                    </th>
+                                    <th>
+
+                                        <a asp-area="admin" asp-controller="teams" asp-action="create" class="btn btn-success btn-rounded btn-fw">Create New</a>
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        <img style="border-radius: 0; height:80px !important; width:auto !important" src="~/Uploads/Images/Team/@item.Image" />
+                                        @(item.Image != null? @item.Image : "")
+                                    </td>
+
+                                    <td>
+                                        @(item.FullName != null? @item.FullName : "")
+
+                                    </td>
+                                    <td>
+                                        @(item.Position != null? @item.Position : "")
+
+                                    </td>
+                                    <td>
+                                        @(item.Info!=null && item.Info.Length>100? item.Info.Substring(0, 100) : item.Info)
+
+                                    </td>
+                                    <td>
+                                        @(item.Email != null? @item.Email : "")
+
+                                    </td>
+                                    <td>
+                                        @(item.Phone != null? @item.Phone : "")
+
+                                    </td>
+                                    <td>
+                                  @item.TotalStudent 
+
+                                    </td>
+                                    <td>
+                                        @item.TotalRating
+
+                                    </td>
+                                    <td>
+                                        @(item.TeamOvercoming!=null && item.TeamOvercoming.Length>100? item.TeamOvercoming.Substring(0, 100) : item.TeamOvercoming)
+
+                                    </td>
+                                    <td>
+                                        @if (Model != null)
+                                        {
+                                            <a asp-area="admin" asp-controller="teams" asp-action="edit" asp-route-id="@item.Id" class="btn btn-warning" title="edit"><i class="mdi mdi-edit"></i>Edit</a>
+                                            <a onclick="return confirm('Are you sure?')" asp-area="admin" asp-controller="teams" asp-action="delete" asp-route-id="@item.Id" class="btn btn-danger" title="delete"><i class="mdi mdi-delete"></i>Delete</a>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

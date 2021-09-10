@@ -1,0 +1,61 @@
+﻿@model EduCavoFinal.Models.About
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Update About Us</h4>
+
+                    <form asp-area="admin" asp-controller="abouts" asp-action="edit" method="post" class="forms-sample" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label asp-for="@Model.VideoFile" for="formFile">VideoFile</label>
+                            <input asp-for="@Model.VideoFile" type="file" class="form-control" id="VideoFile" placeholder="VideoFile">
+                            <input type="hidden" asp-for="@Model.Id" />
+                            <input type="hidden" asp-for="@Model.Video" />
+
+                            <span class="text-danger" asp-validation-for="@Model.VideoFile"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Title" for="title">Title</label>
+                            <input asp-for="@Model.Title" type="text" class="form-control" id="title" placeholder="Title">
+                            <span class="text-danger" asp-validation-for="@Model.Title"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Students" for="Students">Students</label>
+                            <input asp-for="@Model.Students" type="number" class="form-control" id="Students" placeholder="Students">
+                            <span class="text-danger" asp-validation-for="@Model.Students"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Desc" for="text">Desc</label>
+                            <textarea asp-for="@Model.Desc" type="text" class="form-control" id="Desc" placeholder="Desc"></textarea>
+                            <span class="text-danger" asp-validation-for="@Model.Desc"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="mb-3">
+                                <label asp-for="@Model.CGPA" for="CGPA">CGPA</label>
+                                <input asp-for="@Model.CGPA" class="form-control" type="number" placeholder="CGPA">
+                            </div>
+                            <span class="text-danger" asp-validation-for="@Model.CGPA"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="mb-3">
+                                <label asp-for="@Model.Graduates" for="Graduates" class="form-label">Graduates</label>
+                                <input asp-for="@Model.Graduates" class="form-control" type="number" id="Graduates" placeholder="Graduates">
+                            </div>
+                            <span class="text-danger" asp-validation-for="@Model.Graduates"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-success mr-2">Update</button>
+                        <button asp-area="admin" asp-controller="abouts" asp-action="index" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

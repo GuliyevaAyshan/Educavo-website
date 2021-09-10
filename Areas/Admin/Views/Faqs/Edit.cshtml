@@ -1,0 +1,49 @@
+﻿@model EduCavoFinal.Models.Faq
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Update Faqs</h4>
+
+                    <form asp-area="admin" asp-controller="faqs" asp-action="edit" method="post" class="forms-sample" enctype="multipart/form-data">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Questions" class="control-label"></label>
+                            <input asp-for="Questions" class="form-control" />
+                            <span asp-validation-for="Questions" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Collapse" class="control-label"></label>
+                            <input asp-for="Collapse" class="form-control" />
+                            <span asp-validation-for="Collapse" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Faq Titles</label>
+                            <select asp-for="@Model.FaqTitlesId" asp-items="@(new SelectList(ViewBag.FaqTitle, "Id","Title"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.FaqTitlesId"></span>
+
+                        </div>
+                        <input type="hidden" asp-for="@Model.Id" />
+                        <button type="submit" class="btn btn-success mr-2">Update</button>
+                        <button asp-area="admin" asp-controller="faqs" asp-action="index" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

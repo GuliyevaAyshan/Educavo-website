@@ -1,0 +1,46 @@
+﻿@model EduCavoFinal.Models.Testimonials
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Create testimonial</h4>
+
+                    <form asp-area="admin" asp-controller="testimonials" asp-action="create" method="post" class="forms-sample" enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <label asp-for="@Model.ImageFile" for="formFile" class="form-label">Image</label>
+                            <input asp-for="@Model.ImageFile" type="file" class="form-control" id="formFile" placeholder="Video">
+                            <span class="text-danger" asp-validation-for="@Model.ImageFile"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Text" for="Text">Text</label>
+                            <textarea asp-for="@Model.Text" type="text" class="form-control" id="Text" placeholder="Text"></textarea>
+                            <span class="text-danger" asp-validation-for="@Model.Text"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.FullName" for="FullName">FullName</label>
+                            <input asp-for="@Model.FullName" type="text" class="form-control" id="FullName" placeholder="FullName">
+                            <span class="text-danger" asp-validation-for="@Model.FullName"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Position" for="Position">Position</label>
+                            <input asp-for="@Model.Position" type="text" class="form-control" id="Position" placeholder="Position">
+                            <span class="text-danger" asp-validation-for="@Model.Position"></span>
+                        </div>
+
+                       
+                        <button type="submit" class="btn btn-success mr-2">Create</button>
+                        <button asp-area="admin" asp-controller="testimonials" asp-action="index" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,286 @@
+﻿@model VMHome
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    <style>
+        #rowflex {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+}
+
+<!-- Course Categories Start -->
+<div id="ga-categories" class="ga-categories main-home pt-90 pb-100 md-pt-60 md-pb-40">
+    <div class="container">
+        <div class="sec-title3 text-center mb-45">
+            <div class="sub-title">Top Categories</div>
+            <h2 class="title black-color">Popular Online Categories</h2>
+        </div>
+        <div class="row mb-35">
+            @foreach (var item in Model.PopularCategories.Where(c => (c.IsOnline == true)))
+            {
+                <div class="col-lg-4 col-md-6 mb-30">
+                    <div class="categories-items">
+                        <div class="category-images">
+                            <a href="#"><img src="~/Uploads/Images/@item.Image" alt="" /></a>
+                        </div>
+                        <div class="contents">
+                            <div class="img-part">
+                                <img src="~/images/categories/main-home/icon/@item.Image" alt="" />
+                            </div>
+                            <div class="content-wrap">
+                                <h2 class="title"><a href="#">@item.Name</a></h2>
+                                <span class="course-qnty">0 @item.OnlineCategoriesCount Courses</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            <div class="col-lg-12 text-center">
+                <a class="readon orange-btn main-home" asp-controller="Course" asp-action="Index">
+                    View All categories
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Categories Start -->
+<div id="ga-popular-courses" class="
+          ga-popular-courses
+          main-home
+          event-bg
+          pt-100
+          pb-100
+          md-pt-70 md-pb-70
+        ">
+    <div class="container">
+        <div class="sec-title3 text-center mb-45">
+            <div class="sub-title">Select Courses</div>
+            <h2 class="title black-color">Explore Popular Courses</h2>
+        </div>
+        <div class="row" id="rowflex">
+            @foreach (var item in Model.PopularCourses)
+            {
+                <div class="col-lg-4 col-md-6 mb-30">
+                    <div class="courses-item">
+                        <div class="courses-grid">
+                            <div class="img-part">
+                                <a href="#"><img src="~/Uploads/Images/@item.Image" alt="" /></a>
+                            </div>
+                            <div class="content-part">
+                                <div class="info-meta">
+                                    <ul>
+                                        <li class="ratings">
+
+                                            @{
+                                                decimal rating = 0;
+                                                int finalRating = 0;
+                                                foreach (var item2 in Model.Reviews)
+                                                {
+                                                    rating += item2.Rating;
+                                                }
+                                                if (item.Review.Count != 0)
+                                                {
+                                                    finalRating = Convert.ToInt32(Math.Ceiling(rating / Model.Reviews.Count));
+                                                }
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    if (i <= finalRating)
+                                                    {
+
+                                                        <i class="fa fa-star"></i>
+
+                                                    }
+
+                                                }
+                                                <a href="#." class="hover-underline" title="@finalRating">(@Model.Reviews.Count rating)</a>
+                                            }
+
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="course-price">
+
+                                    @if (@item.Fea == 0)
+                                    {
+                                        <span class="price">Free</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="price">$@item.Fea.ToString("##")</span>
+                                    }
+
+                                </div>
+                                <h3 class="title">
+                                    <a asp-controller="course" asp-action="index">@item.Title</a>
+                                </h3>
+                                <ul class="meta-part">
+                                    <li class="user">
+                                        <i class="fa fa-user"></i>
+                                        @item.StudentCount Students
+                                    </li>
+                                    <li class="user">
+                                        <i class="fa fa-file"></i>
+                                        @item.Lectures Lessons
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>                                  
+                }
+            </div>
+    </div>
+</div>
+<!-- Offer Section Start -->
+
+<div class="ga-cta main-home">
+        <div class="partition-bg-wrap">
+            <div class="container">
+                <div class="row">
+                    <div class="offset-lg-6"></div>
+                    <div class="col-lg-6 pl-70 md-pl-15" id="gacta">
+                        <div class="sec-title3 mb-40">
+                            <h2 class="title white-color mb-16">@Model.OfferStates.FirstOrDefault().Title</h2>
+                            <div class="desc white-color pr-100 md-pr-0">
+                                @Model.OfferStates.FirstOrDefault().Desc
+                            </div>
+                        </div>
+                        <div class="btn-part">
+                            <a class="readon orange-btn transparent" asp-controller="Home" asp-action="Register">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Faq Start -->
+<div class="ga-faq-part style1 orange-color pt-100 pb-100 md-pt-70 md-pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 padding-0">
+                <div class="main-part">
+                    <div class="title mb-40 md-mb-15">
+                        <h2 class="text-part">Frequently Asked Questions</h2>
+                    </div>
+                    <div class="faq-content">
+                        <div id="accordion" class="accordion">
+                            @foreach (var item in Model.MostAskedFaqs)
+                            {
+                                <div class="card">
+                                    <div class="card-header">
+                                        <a class="card-link collapsed" data-toggle="collapse" href="#@item.Collapse" aria-expanded="false">
+                                            @item.Questions
+                                        </a>
+                                    </div>
+                                    <div id="@item.Collapse" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            @item.Description
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 padding-0">
+                <div class="img-part media-icon orange-color">
+                    <a class="popup-videos" href="https://www.youtube.com/watch?v=atMUy_bPoQI">
+                        <i class="fa fa-play"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial Start -->
+<div class="ga-testimonial main-home pt-100 pb-100 md-pt-70 md-pb-70">
+    <div class="container">
+        <div class="sec-title3 mb-50 md-mb-30 text-center">
+            <div class="sub-title primary">Testimonial</div>
+            <h2 class="title white-color">What Students Saying</h2>
+        </div>
+        <div class="ga-carousel owl-carousel" data-loop="true" data-items="2" data-margin="30"
+             data-autoplay="true" data-hoverpause="true" data-autoplay-timeout="5000" data-smart-speed="800"
+             data-dots="true" data-nav="false" data-nav-speed="false" data-md-device="2"
+             data-md-device-nav="false" data-md-device-dots="true" data-center-mode="false" data-ipad-device2="1"
+             data-ipad-device-nav2="false" data-ipad-device-dots2="true" data-ipad-device="2"
+             data-ipad-device-nav="false" data-ipad-device-dots="true" data-mobile-device="1"
+             data-mobile-device-nav="false" data-mobile-device-dots="false">
+            @foreach (var item in Model.Testimonials)
+            {
+                <div class="testimonial-item">
+                    <div class="author-desc">
+                        <div class="desc">
+                            <img class="quote" src="~/images/testimonial/main-home/test-2.png"
+                                 alt="" />@item.Text
+                            </div>
+                            <div class="author-img">
+                                <img src="~/Uploads/Images/@item.Image" alt="" />
+                            </div>
+                        </div>
+                        <div class="author-part">
+                            <a class="name" href="#">@item.FullName</a>
+                            <span class="designation">@item.Position</span>
+                        </div>
+                    </div>
+                }
+
+        </div>
+    </div>
+</div>
+<!-- Blog start -->
+<div id="ga-blog" class="ga-blog main-home pb-100 pt-100 md-pt-70 md-pb-70">
+    <div class="container">
+        <div class="sec-title3 text-center mb-50">
+            <div class="sub-title">News Update</div>
+            <h2 class="title">Latest News & events</h2>
+        </div>
+        <div class="ga-carousel owl-carousel" data-loop="true" data-items="3" data-margin="30"
+             data-autoplay="true" data-hoverpause="true" data-autoplay-timeout="5000" data-smart-speed="800"
+             data-dots="false" data-nav="false" data-nav-speed="false" data-center-mode="false"
+             data-mobile-device="1" data-mobile-device-nav="false" data-mobile-device-dots="false"
+             data-ipad-device="2" data-ipad-device-nav="false" data-ipad-device-dots="false"
+             data-ipad-device2="1" data-ipad-device-nav2="false" data-ipad-device-dots2="false"
+             data-md-device="3" data-md-device-nav="false" data-md-device-dots="false">
+            @foreach (var item in Model.LatestBlog)
+            {
+                <div class="blog-item">
+                    <div class="image-part">
+                        <img src="~/Uploads/Images/@item.Image" alt="" />
+                    </div>
+                    <div class="blog-content">
+                        <ul class="blog-meta">
+                            <li><i class="fa fa-user-o"></i>@item.Users.Username</li>
+                            <li><i class="fa fa-calendar"></i>@item.AddedDate.ToString("MMMM dd,yyyy")</li>
+                        </ul>
+                        <h3 class="title">
+                            <a asp-controller="blog" asp-action="index">@item.Title</a>
+                        </h3>
+                        <div class="desc">
+                            @Html.Raw(item.Content.Length > 100 ? item.Content.Substring(0, 100) : item.Content)
+                        </div>
+                        <div class="btn-btm">
+                            <div class="blogcateg-list">
+                                <ul class="post-categories">
+                                    <li><a href="#">College</a></li>
+                                </ul>
+                            </div>
+                            <div class="ga-view-btn">
+                                <a asp-controller="blog" asp-action="details" asp-route-id="@item.Id">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- Subscribe start -->
+<partial name="_SubscribePartial" model="@Model.Subscribe" />
+

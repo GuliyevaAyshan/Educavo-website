@@ -1,0 +1,20 @@
+﻿@model VMBreadcrumb
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<!-- Breadcrumbs Start -->
+<div class="ga-breadcrumbs breadcrumbs-overlay">
+    <div class="breadcrumbs-img">
+        <img src="~/images/breadcrumbs/2.jpg" alt="Breadcrumbs Image">
+    </div>
+    <div class="breadcrumbs-text white-color">
+        <h1 class="page-title">@Model.Current</h1>
+        <ul>
+            <li>
+                <a class="active" href="index.html">@Model.Preview</a>
+            </li>
+            <li>@Model.Current</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumbs End -->

@@ -1,0 +1,40 @@
+﻿@model VMFaq
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    VMBreadcrumb vmBreadcrumb = new VMBreadcrumb() { Preview = "Home", Current = "Faq" };
+}
+
+<!-- Main content Start -->
+<div class="main-area">
+    <!-- Breadcrumbs Start -->
+    <partial name="_BreadcrumbPartial" model="vmBreadcrumb" />
+    <div class="ga-faq-part orange-color pt-100 pb-100 md-pt-70 md-pb-70">
+        <div class="container">
+            @foreach (var item in Model.FaqTitles)
+            {
+                <div class="content-part mb-50 md-mb-30">
+                    <div class="title mb-40 md-mb-15">
+                        <h3 class="text-part">@item.Title</h3>
+                    </div>
+                    <div id="accordion" class="accordion">
+                        @foreach (var item2 in item.Faq.Take(3))
+                        {
+                            <div class="card">
+                                <div class="card-header">
+                                    <a class="card-link collapsed" data-toggle="collapse" href="#@item2.Collapse">@item2.Questions</a>
+                                </div>
+                                <div id="@item2.Collapse" class="collapse" data-parent="#accordion">
+                                    <div class="card-body">
+                                        @item2.Description
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- Subscribe start -->
+    <partial name="_SubscribePartial" model="@Model.Subscribe" />

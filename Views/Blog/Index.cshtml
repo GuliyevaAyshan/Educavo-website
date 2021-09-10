@@ -1,0 +1,115 @@
+﻿@model VMBlog
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    VMBreadcrumb vmBreadcrumb = new VMBreadcrumb() { Preview = "Home", Current = "Blog" };
+    <style>
+
+      .col-lg-4 {
+            float: right !important;
+        }
+    </style>}
+    <!-- Main content Start -->
+    <div class="main-area">
+        <!-- Breadcrumbs Start -->
+        <partial name="_BreadcrumbPartial" model="vmBreadcrumb" />
+        <!-- Blog Section Start -->
+        <div class="ga-inner-blog orange-color pt-100 pb-100 md-pt-70 md-pb-70">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 order-last">
+                        <div class="widget-area">
+                            <div class="search-widget mb-50">
+                                <form class="search-wrap">
+                                    <input type="search" placeholder="Searching..." name="searchData" class="search-input" value="">
+                                    <button type="submit" value="Search"><i class=" flaticon-search"></i></button>
+                                </form>
+                            </div>
+                            <div class="recent-posts mb-50">
+                                <h3 class="widget-title">Recent Posts</h3>
+                                <ul>
+                                    @foreach (var item in Model.RecentPost)
+                                    {
+                                        <li><a asp-controller="Blog" asp-action="Details" asp-route-id="@item.Id">@item.Title</a></li>
+                                    }
+
+                                </ul>
+                            </div>
+                            <div class="widget-archives mb-50">
+                                <h3 class="widget-title">Archives</h3>
+                                <ul>
+                                    @foreach (var item in Model.VMDates)
+                                    {
+                                        <li>
+                                            <a asp-controller="blog" asp-action="Index" asp-route-year="@item.Year" asp-route-month="@item.Month">
+                                                <span class="archive_year"> @((VMDate.Monthes)(item.Month - 1)) @item.Year</span><span class="archive_num">(@item.Count)</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @*<li><a href="#">September 2020</a></li>
+                                        <li><a href="#">September 2020</a></li>*@
+                                </ul>
+                            </div>
+                            <div class="widget-archives mb-50">
+                                <h3 class="widget-title">Categories</h3>
+                                <ul>
+                                    @foreach (var item in Model.Categories.Take(5))
+                                    {
+                                        <li><a asp-controller="Blog" asp-action="Index" asp-route-id="@item.Id">@item.Name</a></li>
+                                    }
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 pr-50">
+                        <div class="row">
+                            @foreach (var item in Model.Blogs)
+                            {
+                                <div class="col-lg-12 mb-70">
+                                    <div class="blog-item">
+                                        <div class="blog-img">
+                                            <a asp-controller="Blog" asp-action="Details" asp-route-id="@item.Id"><img src="~/Uploads/Images/@item.Image" alt=""></a>
+                                        </div>
+                                        <div class="blog-content">
+                                            <h3 class="blog-title"><a asp-controller="Blog" asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h3>
+                                            <div class="blog-meta">
+                                                <ul class="btm-cate">
+                                                    <li>
+                                                        <div class="blog-date">
+                                                            <i class="fa fa-calendar-check-o"></i> @item.AddedDate.ToString("MMMM dd,yyyy")
+
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="author">
+                                                            <i class="fa fa-user-o"></i> @item.Users.Username
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="tag-line">
+                                                            <i class="fa fa-book"></i>
+                                                            <a asp-controller="Blog" asp-action="Index">@item.Categories.Name</a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="blog-desc">
+                                            
+                                                @Html.Raw(item.Content!=null && item.Content.Length>250? item.Content.Substring(0, 250) : item.Content)
+                                            </div>
+                                            <div class="blog-button">
+                                                <a class="blog-btn" asp-controller="Blog" asp-action="Details" asp-route-id="@item.Id">Continue Reading</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Subscribe start -->
+        <partial name="_SubscribePartial" model="@Model.Subscribe" />
+    </div>

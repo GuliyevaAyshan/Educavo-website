@@ -1,0 +1,85 @@
+﻿@model IEnumerable<EduCavoFinal.Models.Message>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title ml-2">Messages</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        Email
+                                    </th>
+                                   
+                                    <th>
+                                        Subject
+                                    </th>
+                                    <th>
+                                        Phone
+                                    </th>
+                                    <th>
+                                        Message text
+                                    </th>
+                                    <th>
+                                        AddedDate
+                                    </th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        @item.Name
+
+                                    </td>
+                                    <td>
+                                        @item.Email
+
+                                    </td>
+                                    <td>
+                                        @item.Subject
+
+                                    </td>
+                                    <td>
+                                        @item.Phone
+
+                                    </td>
+                                    <td>
+                                        @(item.MessageText!=null && item.MessageText.Length>100? item.MessageText.Substring(0, 100) : item.MessageText)
+
+                                    </td>
+                                    <td>
+                                        @item.AddedDate.ToString("dd.MM.yyyy")
+                                    </td>
+                                    <td>
+                                        @if (Model != null)
+                                        {
+
+                                            <a onclick="return confirm('Are you sure?')" asp-area="admin" asp-controller="messages" asp-action="delete" asp-route-id="@item.Id" class="btn btn-danger" title="delete"><i class="mdi mdi-delete"></i>Delete</a>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

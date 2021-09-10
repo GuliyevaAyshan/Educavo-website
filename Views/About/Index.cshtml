@@ -1,0 +1,201 @@
+﻿@model VMAbout 
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    VMBreadcrumb vmBreadcrumb = new VMBreadcrumb() { Preview = "Home", Current = "About us" };
+}
+
+<!-- Main content Start -->
+<div class="main-area">
+    <!-- Breadcrumbs Start -->
+    <partial name="_BreadcrumbPartial" model="vmBreadcrumb" />
+    <!-- Breadcrumbs End -->
+    <!-- Counter Section Start -->
+    <div id="ga-about" class="ga-about style3 pt-100 md-pt-70">
+        <div class="container">
+            <div class="row y-middle">
+                <div class="col-lg-4 lg-pr-0 md-mb-30">
+                    <div class="about-intro">
+                        <div class="sec-title">
+                            <div class="sub-title orange">About Us</div>
+                            <h2 class="title mb-21">@Model.About.Title</h2>
+                            <div class="desc big">@Html.Raw(Model.About.Desc)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 pl-83 md-pl-15">
+                    <div class="row ga-counter couter-area">
+                        <div class="col-md-4 sm-mb-30">
+                            <div class="counter-item one">
+                                <img class="count-img" src="~/images/about/style3/icons/1.png" alt="">
+                                <h2 class="number ga-count kplus">@Model.About.Students</h2>
+                                <h4 class="title mb-0">Students</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-4 sm-mb-30">
+                            <div class="counter-item two">
+                                <img class="count-img" src="~/images/about/style3/icons/2.png" alt="">
+                                <h2 class="number ga-count">@Model.About.CGPA</h2>
+                                <h4 class="title mb-0">Average CGPA</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="counter-item three">
+                                <img class="count-img" src="~/images/about/style3/icons/3.png" alt="">
+                                <h2 class="number ga-count percent">@Model.About.Graduates</h2>
+                                <h4 class="title mb-0">Graduates</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Counter Section End -->
+    <!-- About Section Start -->
+    <div id="ga-about-video" class="ga-about-video pt-100 pb-100 md-pt-70 md-pb-70">
+        <div class="container">
+            <div class="video-img-part media-icon orange-color2">
+                <img src="~/images/about/about-video-bg-orange.png" alt="Video Bg Image">
+                <a class="popup-videos" href="~/Uploads/Videos/@Model.About.Video">
+                    <i class="fa fa-play"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- About Section End -->
+    <!-- Team Section Start -->
+    <div id="ga-team" class="ga-team style1 inner-style orange-color pt-94 pb-100 md-pt-64 md-pb-70 gray-bg">
+        <div class="container">
+            <div class="sec-title mb-50 md-mb-30 text-center">
+                <div class="sub-title orange">Instructor</div>
+                <h2 class="title mb-0">Expert Teachers</h2>
+            </div>
+            <div class="row">
+                @foreach (var item in Model.Team)
+                {
+                    <div class="col-lg-4 col-sm-6 mb-30">
+                        <div class="team-item">
+                            <img src="~/Uploads/Images/team/@item.Image" alt="">
+                            <div class="content-part">
+                                <h4 class="name"><a asp-controller="team" asp-action="details" asp-route-id="@item.Id">@item.FullName</a></h4>
+                                <span class="designation">@item.Position</span>
+                                <ul class="social-links">
+                                    @foreach (var item1 in Model.Socials.Take(4))
+                                    {
+                                        <li><a href="@item1.Link"><i class="@item1.Icon"></i></a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }             
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial Section Start -->
+    <div class="ga-testimonial style3 orange-color pt-90 md-pt-70">
+        <div class="container">
+            <div class="sec-title mb-60 md-mb-30 text-center">
+                <div class="sub-title orange">Student Reviews</div>
+                <h2 class="title mb-0">What Our Students Says</h2>
+            </div>
+            <div class="ga-carousel owl-carousel" data-loop="true" data-items="2" data-margin="30" data-autoplay="true" data-hoverpause="true" data-autoplay-timeout="5000" data-smart-speed="800" data-dots="true" data-nav="false" data-nav-speed="false" data-center-mode="false" data-mobile-device="1" data-mobile-device-nav="false" data-mobile-device-dots="false" data-ipad-device="2" data-ipad-device-nav="false" data-ipad-device-dots="false" data-ipad-device2="2" data-ipad-device-nav2="false" data-ipad-device-dots2="false" data-md-device="2" data-md-device-nav="false" data-md-device-dots="true">
+                @foreach (var item in Model.StudentsFeedbacks)
+                {
+                    <div class="testimonial-item">
+                        <div class="row y-middle no-gutter">
+                            <div class="col-md-4">
+                                <div class="user-info">
+                                    <img src="~/Uploads/Images/@item.Image" alt="">
+                                    <h4 class="name">@item.FullName</h4>
+                                    <span class="designation">@item.Position</span>
+                                    <ul class="ratings">
+                                        <li>
+                                          
+                                             
+
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    if (i <= item.Rating)
+                                                    {
+
+                                                        <i class="fa fa-star"></i>
+
+                                                    }
+
+                                                }
+
+                                        </li>                                                                    
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="desc">@item.Text</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- Blog Section Start -->
+    <div id="ga-blog" class="ga-blog orange-color style1 modify1 pt-85 pb-100 md-pt-70 md-pb-70">
+        <div class="container">
+            <div class="sec-title mb-60 md-mb-30 text-center">
+                <div class="sub-title orange">News Update </div>
+                <h2 class="title mb-0">Latest News & Events</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-7 pr-60 md-pr-15 md-mb-30">
+                    @foreach (var item in Model.LatestBlog)
+	{
+                    <div class="row no-gutter white-bg blog-item mb-35">
+                        <div class="col-md-6">
+                            <div class="image-part">
+                                <a href="#"><img src="~/Uploads/Images/@item.Image" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="blog-content">
+                                <ul class="blog-meta">
+                                    <li><i class="fa fa-user-o"></i> @item.Users.Username</li>
+                                    <li><i class="fa fa-calendar"></i>@item.AddedDate.ToString("MMMM dd, yyyy")</li>
+                                </ul>
+                                <h3 class="title"><a asp-controller="Blog" asp-action="Details" asp-route-id="@item.Id">@item.Title</a></h3>
+                                <div class="btn-part">
+                                    <a class="readon-arrow" asp-controller="Blog" asp-action="Details" asp-route-id="@item.Id">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+	}
+                    
+                    
+                </div>
+                <div class="col-lg-5 lg-pl-0">
+                    @foreach (var item in Model.LatestEvents)
+                    {
+                        <div class="events-short mb-28">
+                            <div class="date-part @item.BackgColor">
+                                <span class="month">@item.Date.ToString("MMMM")</span>
+                                <div class="date">@item.Date.ToString("dd")</div>
+                            </div>
+                            <div class="content-part">
+                                <div class="categorie">
+                                    <a href="#">@item.SubTitle</a>
+                                </div>
+                                <h4 class="title mb-0"><a asp-controller="Blog" asp-action="Index">@item.Title</a></h4>
+                            </div>
+                        </div>
+                    }
+
+             
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Subscribe start -->
+    <partial name="_SubscribePartial" model="@Model.Subscribe" />
+</div>
+

@@ -1,0 +1,46 @@
+﻿@model EduCavoFinal.Models.ContactToTeam
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Create Team and contacts relation</h4>
+
+                    <form asp-area="admin" asp-controller="contacttoteams" asp-action="create" method="post" class="forms-sample" enctype="multipart/form-data">
+
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Phone</label>
+                            <select asp-for="@Model.ContactId" asp-items="@(new SelectList(ViewBag.Contact, "Id","Phone"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.ContactId"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Email</label>
+                            <select asp-for="@Model.ContactId" asp-items="@(new SelectList(ViewBag.Contact, "Id","Email"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.ContactId"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">Team</label>
+                            <select asp-for="@Model.TeamId" asp-items="@(new SelectList(ViewBag.Team, "Id","FullName"))" class="form-control" id="exampleFormControlSelect2">
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.TeamId"></span>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-success mr-2">Create</button>
+                        <button asp-area="admin" asp-controller="contacttoteams" asp-action="index" class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

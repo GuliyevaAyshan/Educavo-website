@@ -1,0 +1,34 @@
+﻿@model VMAbouts
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+} 
+
+<div class="col-lg-8 pl-83 md-pl-15">
+    <h1 style="color:orangered;">Admin Home</h1>
+
+    <br />
+    <div class="row ga-counter couter-area">
+        <div class="col-md-4 sm-mb-30">
+            <div class="counter-item one">
+                <img class="count-img" src="~/images/about/style3/icons/1.png" alt="">
+                <h2 class="number ga-count kplus">  @Model.About.Students K</h2>
+                <h4 class="title mb-0">Students</h4>
+            </div>
+        </div>
+        <div class="col-md-4 sm-mb-30">
+            <div class="counter-item two">
+                <img class="count-img" src="~/images/about/style3/icons/2.png" alt="">
+                <h2 class="number ga-count">  @Model.About.CGPA </h2>
+                <h4 class="title mb-0">Average CGPA</h4>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="counter-item three">
+                <img class="count-img" src="~/images/about/style3/icons/3.png" alt="">
+                <h2 class="number ga-count percent">  @Model.About.Graduates %</h2>
+                <h4 class="title mb-0">Graduates</h4>
+            </div>
+        </div>
+    </div>
+</div>

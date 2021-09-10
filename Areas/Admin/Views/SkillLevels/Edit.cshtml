@@ -1,0 +1,33 @@
+﻿@model EduCavoFinal.Models.SkillLevel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+<div class="row d-flex justify-content-center">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Update Skill Levels</h4>
+
+                <form asp-area="admin" asp-controller="skilllevels" asp-action="edit" method="post" class="forms-sample" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label asp-for="@Model.Name" for="Name">Name</label>
+                        <input asp-for="@Model.Name" type="text" class="form-control" id="Name" placeholder="Name">
+                        <input type="hidden" asp-for="@Model.Id" />
+                        <span class="text-danger" asp-validation-for="@Model.Name"></span>
+                    </div>
+                    <input type="hidden" asp-for="@Model.Id" />
+                    <button type="submit" class="btn btn-success mr-2">Update</button>
+                    <button asp-area="admin" asp-controller="skilllevels" asp-action="index" class="btn btn-light">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+

@@ -1,0 +1,36 @@
+﻿@model EduCavoFinal.Models.CourseTypes
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title ml-2">CourseTypes</h4>
+
+                <h5>Are you sure you want to delete this?</h5>
+                <div>
+
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-5">
+                            @Html.DisplayNameFor(model => model.Types)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Types)
+                        </dd>
+                    </dl>
+
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="submit" value="Delete" class="btn btn-danger" /> |
+                        <a asp-action="Index">Back to List</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
